@@ -2,48 +2,79 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
-    <meta
-      name="viewport"
-      content="width=device-width,
-     initial-scale=1.0"
-    />
-    <script src="script.js" defer></script>
-    <script scr="Aluno.js" defer></script>
+    <script src="./Aluno.js" defer></script>
+    <script src="./Turma.js" defer></script>
+    <script src="./Interface.js" defer></script>
+    <script src="./script.js" defer></script>
     <title>Sistema Escolar</title>
   </head>
   <body>
-    <!-- Botões para trocar de aba -->
-    <div class="tabs-container">
-      <button
-        class="tab-button active"
-        id="btn-cadastrar"
-        onclick="cadastrar()"
-      >
+    <h1>Sistema Escolar</h1>
+    <nav class="tabs-container" aria-label="Sistema Escolar">
+      <button type="button" class="tab-button active" id="btn-cadastrar" aria-pressed="true">
         Cadastrar
       </button>
-      <button class="tab-button" id="btn-listar" onclick="listar()">
+      <button type="button" class="tab-button" id="btn-listar" aria-pressed="false">
         Listar Alunos
       </button>
-    </div>
+    </nav>
 
-    <!-- Conteúdo da Aba 1: Cadastrar -->
-    <div id="tab-cadastrar" class="tab-content active">
-      Nome: <input id="nome" type="text" /> Nota 1:
-      <input id="n1" type="text" /> Nota 2: <input id="n2" type="text" /> Nota
-      3: <input id="n3" type="text" />
-      <button onclick="salvar()" class="btn-salvar">Salvar Aluno</button>
-    </div>
+    <main>
+      <p id="mensagem" role="status"></p>
+      <section id="tab-cadastrar" class="tab-content active">
+        <form id="form-turma">
+          <h2>Cadastrar turma</h2>
+          <label for="nome-turma">Nome da turma</label>
+          <input id="nome-turma" name="nome" required />
+          <label for="professor">Professor</label>
+          <input id="professor" name="professor" required />
+          <label for="curso">Curso</label>
+          <input id="curso" name="curso" required />
+          <button class="btn-salvar" type="submit">Salvar turma</button>
+        </form>
 
-    <!-- Conteúdo da Aba 2: Listar -->
-    <div id="tab-listar" class="tab-content">
-      <h3>Alunos Cadastrados</h3>
-      <ul class="lista-alunos">
-        <!-- O JavaScript vai colocar os alunos aqui depois -->
-        <li id="alunos">Nenhum aluno cadastrado ainda.</li>
-      </ul>
-    </div>
+        <form id="form-aluno">
+          <h2>Cadastrar aluno</h2>
+          <p id="aviso-turma">Cadastre uma turma para liberar o cadastro de alunos.</p>
+          <fieldset id="campos-aluno" disabled>
+            <label for="turma-aluno">Turma</label>
+            <select id="turma-aluno" name="turma" required>
+              <option value="">Selecione uma turma</option>
+            </select>
+            <label for="nome">Nome do aluno</label>
+            <input id="nome" name="nome" required />
+            <div class="notas">
+              <label for="n1">Nota 1<input id="n1" name="nota1" type="number" min="0" max="10" step="any" required /></label>
+              <label for="n2">Nota 2<input id="n2" name="nota2" type="number" min="0" max="10" step="any" required /></label>
+              <label for="n3">Nota 3<input id="n3" name="nota3" type="number" min="0" max="10" step="any" required /></label>
+            </div>
+            <button class="btn-salvar" type="submit">Salvar aluno</button>
+          </fieldset>
+        </form>
+      </section>
 
-    <script src="./script.js"></script>
+      <section id="tab-listar" class="tab-content">
+        <h2>Turmas e alunos cadastrados</h2>
+        <div id="turmas-cadastradas"></div>
+      </section>
+    </main>
+
+    <dialog id="editar-notas" aria-labelledby="titulo-edicao">
+      <form id="form-edicao">
+        <h2 id="titulo-edicao">Editar notas</h2>
+        <p id="nome-edicao"></p>
+        <div class="notas">
+          <label for="editar-n1">Nota 1<input id="editar-n1" name="nota1" type="number" min="0" max="10" step="any" required autofocus /></label>
+          <label for="editar-n2">Nota 2<input id="editar-n2" name="nota2" type="number" min="0" max="10" step="any" required /></label>
+          <label for="editar-n3">Nota 3<input id="editar-n3" name="nota3" type="number" min="0" max="10" step="any" required /></label>
+        </div>
+        <div class="acoes">
+          <button id="cancelar-edicao" type="button">Cancelar</button>
+          <button class="btn-salvar" type="submit">Salvar notas</button>
+        </div>
+      </form>
+    </dialog>
   </body>
 </html>
